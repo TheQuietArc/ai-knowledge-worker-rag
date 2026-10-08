@@ -1,0 +1,8 @@
+openai>=1.0.0
+numpy
+python-dotenv
+langchain-text-splitters
+chromadb
+scikit-learn
+matplotlib
+gradio
