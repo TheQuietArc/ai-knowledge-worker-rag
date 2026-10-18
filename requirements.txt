@@ -6,3 +6,4 @@ chromadb
 scikit-learn
 matplotlib
 gradio
+pydantic

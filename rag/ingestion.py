@@ -1,7 +1,7 @@
 """
-Loading and chunking the knowledge base — unchanged logic from Day 2, moved into a
-proper module so both the index-building script and the app can share it instead of
-duplicating code.
+Loading and chunking the knowledge base. Chunk size and overlap are parameters (with
+the production values from config as defaults) so the Day 4 evaluation can compare
+different chunking strategies without touching the app's settings.
 """
 
 import os
@@ -11,13 +11,17 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from rag.config import DOCS_FOLDER, CHUNK_SIZE, CHUNK_OVERLAP
 
 
-def load_and_chunk_documents(folder: str = DOCS_FOLDER) -> list[dict]:
+def load_and_chunk_documents(
+    folder: str = DOCS_FOLDER,
+    chunk_size: int = CHUNK_SIZE,
+    chunk_overlap: int = CHUNK_OVERLAP,
+) -> list[dict]:
     """Load every .md file from doc_type subfolders (profile/, projects/, skills/)
     and split each into overlapping chunks. Returns a flat list of chunk dicts, each
     tagged with its source file and doc_type."""
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=CHUNK_SIZE,
-        chunk_overlap=CHUNK_OVERLAP,
+        chunk_size=chunk_size,
+        chunk_overlap=chunk_overlap,
         separators=["\n\n", "\n", ". ", " ", ""],
     )
 

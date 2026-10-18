@@ -23,6 +23,13 @@ from rag.ingestion import load_and_chunk_documents
 RETRYABLE_ERRORS = (openai.RateLimitError, openai.InternalServerError)
 
 
+def is_daily_quota_error(error: Exception) -> bool:
+    """True if a 429 is a per-DAY quota (e.g. Gemini's 'GenerateRequestsPerDay...'),
+    which resets at a fixed time, as opposed to a per-MINUTE limit worth retrying."""
+    message = str(error)
+    return "PerDay" in message or "per day" in message.lower()
+
+
 def call_with_retry(fn, *args, **kwargs):
     """Retry-with-backoff around any API call. Handles both 429 (rate limit) and
     503 (provider temporarily overloaded) — the free tier hits both at times."""
@@ -30,6 +37,11 @@ def call_with_retry(fn, *args, **kwargs):
         try:
             return fn(*args, **kwargs)
         except RETRYABLE_ERRORS as e:
+            # A per-DAY quota error won't clear in a minute — waiting 15-60s and
+            # retrying just burns time. Fail immediately so the caller can save its
+            # progress and tell the user to come back after the daily reset.
+            if is_daily_quota_error(e):
+                raise
             if attempt == MAX_RETRIES:
                 raise
             wait_seconds = 15 * attempt
