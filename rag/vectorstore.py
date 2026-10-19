@@ -16,11 +16,16 @@ from rag.config import (
 )
 from rag.ingestion import load_and_chunk_documents
 
-# Errors worth retrying: rate limits (429, too many requests too fast) and
-# transient server-side failures (503, the provider is temporarily overloaded).
-# Both are "try again shortly," not "something is wrong with our code" — so both
-# get the same backoff-and-retry treatment instead of crashing the app.
-RETRYABLE_ERRORS = (openai.RateLimitError, openai.InternalServerError)
+# Errors worth retrying: rate limits (429, too many requests too fast), transient
+# server-side failures (503, the provider is temporarily overloaded), and dropped
+# connections (e.g. "Connection reset by peer" from a flaky network; APITimeoutError
+# is a subclass of APIConnectionError, so timeouts are covered too). All are "try
+# again shortly," not "something is wrong with our code."
+RETRYABLE_ERRORS = (
+    openai.RateLimitError,
+    openai.InternalServerError,
+    openai.APIConnectionError,
+)
 
 
 def is_daily_quota_error(error: Exception) -> bool:
@@ -31,8 +36,8 @@ def is_daily_quota_error(error: Exception) -> bool:
 
 
 def call_with_retry(fn, *args, **kwargs):
-    """Retry-with-backoff around any API call. Handles both 429 (rate limit) and
-    503 (provider temporarily overloaded) — the free tier hits both at times."""
+    """Retry-with-backoff around any API call. Handles 429 (rate limit), 503
+    (provider overloaded) and dropped connections. Daily-quota errors are NOT retried."""
     for attempt in range(1, MAX_RETRIES + 1):
         try:
             return fn(*args, **kwargs)
