@@ -25,8 +25,8 @@ DOCS_FOLDER = "data/raw_docs"
 CHROMA_PATH = "chroma_db"
 COLLECTION_NAME = "ashutosh_knowledge_base"
 
-CHUNK_SIZE = 400
-CHUNK_OVERLAP = 80
+CHUNK_SIZE = 800
+CHUNK_OVERLAP = 160
 
 TOP_K = 3           # how many chunks to retrieve per question
 MAX_RETRIES = 5      # API retry attempts on rate limits

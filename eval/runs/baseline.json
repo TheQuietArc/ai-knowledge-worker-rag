@@ -1,0 +1,48 @@
+{
+  "answers": {
+    "What object detection model does the Store Intelligence System use?": "The Store Intelligence System uses **YOLOv8n** for object detection.",
+    "Which tech challenge was the Store Intelligence System originally built for?": "Based on the provided context, it is not mentioned which tech challenge the Store Intelligence System was originally built for.",
+    "Which framework powers the backend API and how many endpoints does it expose?": "The backend API is powered by FastAPI and exposes 9 endpoints.",
+    "What bug did Ashutosh catch where the dashboard showed outdated numbers?": "Ashutosh caught a bug where the video processing pipeline's data went stale, causing the dashboard to continue displaying old metric values—such as showing a full queue of customers even when the store was actually empty.",
+    "Which roles is Ashutosh targeting?": "Ashutosh is targeting Software Development Engineer (SDE) and Data Analyst roles.",
+    "What did the resume reviewer recommend?": "Based on the provided context, the physical resume reviewer recommended focusing on Java as a primary language (the note in the context cuts off after \"add a\")."
+  },
+  "scores": {
+    "What object detection model does the Store Intelligence System use?": {
+      "accuracy": 5,
+      "completeness": 5,
+      "relevance": 5,
+      "feedback": "The candidate answer accurately and completely answers the question."
+    },
+    "Which tech challenge was the Store Intelligence System originally built for?": {
+      "accuracy": 1,
+      "completeness": 1,
+      "relevance": 1,
+      "feedback": "The candidate stated it does not know the answer."
+    },
+    "Which framework powers the backend API and how many endpoints does it expose?": {
+      "accuracy": 5,
+      "completeness": 5,
+      "relevance": 5,
+      "feedback": "The candidate answer accurately and completely identifies FastAPI and the 9 endpoints."
+    },
+    "What bug did Ashutosh catch where the dashboard showed outdated numbers?": {
+      "accuracy": 5,
+      "completeness": 4,
+      "relevance": 5,
+      "feedback": "The candidate correctly explains the bug, though it omits how he noticed it (comparing live footage with the dashboard)."
+    },
+    "Which roles is Ashutosh targeting?": {
+      "accuracy": 5,
+      "completeness": 5,
+      "relevance": 5,
+      "feedback": "The candidate answer fully and correctly identifies the targeted roles."
+    },
+    "What did the resume reviewer recommend?": {
+      "accuracy": 3,
+      "completeness": 2,
+      "relevance": 4,
+      "feedback": "The candidate answer is incomplete; it only notes focusing on Java and misses the recommendations to add a project and pursue a cloud certification."
+    }
+  }
+}
