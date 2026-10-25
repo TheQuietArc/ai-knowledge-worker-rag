@@ -5,3 +5,4 @@ __pycache__/
 *.pyc
 .DS_Store
 eval/.embedding_cache.json
+.pytest_cache/
